@@ -53,6 +53,7 @@ async def get_student(student_id: int) -> Optional[Student]:
     """
     return student_resource.get_by_id(student_id)
 
+
 @app.post("/students")
 async def post_student(student: Student) -> int:
     """Creates a student.
@@ -61,6 +62,7 @@ async def post_student(student: Student) -> int:
     :returns: The number of students created
     """
     return student_resource.create(student)
+
 
 @app.put("/students/{student_id}")
 async def put_student(student_id: int, req: Request) -> int:

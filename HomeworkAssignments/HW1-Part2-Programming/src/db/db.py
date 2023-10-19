@@ -14,6 +14,7 @@ class DB:
             password=password,
             database=database,
             cursorclass=pymysql.cursors.DictCursor,
+            autocommit=True
         )
         self.conn = conn
 
