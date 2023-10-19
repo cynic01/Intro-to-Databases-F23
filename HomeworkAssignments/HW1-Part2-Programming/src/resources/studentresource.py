@@ -46,7 +46,10 @@ class StudentResource(BaseResource):
         :param student_id: The ID to be matched
         :returns: The student with ID student_id, or None if none exists
         """
-        pass
+        rows = self.db.select(self.TABLE_NAME, {"ID": student_id})
+        if not rows:
+            return None
+        return self.parse_student(rows[0])
 
     def create(self, student: Student) -> int:
         """Creates a student.
@@ -54,7 +57,10 @@ class StudentResource(BaseResource):
         :param student: The student to be created
         :returns: The number of students created
         """
-        pass
+        return self.db.insert(self.TABLE_NAME, {"ID": student.ID,
+                                                "name": student.name,
+                                                "dept_name": student.dept_name,
+                                                "tot_cred": student.tot_cred})
 
     def update(self, student_id: int, values: KV) -> int:
         """Updates a student.
@@ -64,7 +70,9 @@ class StudentResource(BaseResource):
         :returns: The number of rows affected. If student_id != student.ID,
                   then immediately return 0 without any updating.
         """
-        pass
+        if "ID" in values and values["ID"] != student_id:
+            return 0
+        return self.db.update(self.TABLE_NAME, values, {"ID": student_id})
 
     def delete(self, student_id: int) -> int:
         """Deletes a student.
@@ -72,4 +80,4 @@ class StudentResource(BaseResource):
         :param student_id: The ID of the student to be deleted
         :returns: The number of rows affected
         """
-        pass
+        return self.db.delete(self.TABLE_NAME, {"ID": student_id})

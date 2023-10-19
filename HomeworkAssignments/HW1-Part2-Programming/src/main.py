@@ -51,7 +51,7 @@ async def get_student(student_id: int) -> Optional[Student]:
     :param student_id: The ID to be matched
     :returns: The student with ID student_id, or None if none exists
     """
-    pass
+    return student_resource.get_by_id(student_id)
 
 @app.post("/students")
 async def post_student(student: Student) -> int:
@@ -60,7 +60,7 @@ async def post_student(student: Student) -> int:
     :param student: The student to be created
     :returns: The number of students created
     """
-    pass
+    return student_resource.create(student)
 
 @app.put("/students/{student_id}")
 async def put_student(student_id: int, req: Request) -> int:
@@ -79,7 +79,7 @@ async def put_student(student_id: int, req: Request) -> int:
     """
 
     # Use `await req.json()` to access the request body
-    pass
+    return student_resource.update(student_id, await req.json())
 
 @app.delete("/students/{student_id}")
 async def delete_student(student_id: int) -> int:
@@ -88,7 +88,7 @@ async def delete_student(student_id: int) -> int:
     :param student_id: The ID of the student to be deleted
     :returns: The number of rows affected
     """
-    pass
+    return student_resource.delete(student_id)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8002)
